@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -9,6 +9,7 @@ import {
 } from '@lucide/angular';
 import { PortfolioStore } from '../../store/portfolio.store';
 import { ProjectPostComponent } from '../project-post/project-post.component';
+import { FeaturedPostComponent } from '../featured-post/featured-post.component';
 
 @Component({
   selector: 'app-feed',
@@ -17,11 +18,12 @@ import { ProjectPostComponent } from '../project-post/project-post.component';
     CommonModule,
     LucideFlame,
     ProjectPostComponent,
+    FeaturedPostComponent,
   ],
   template: `
     <div class="flex-1 min-w-0 max-w-2xl mx-auto w-full space-y-3 pb-16 lg:pb-4">
       <!-- Sort Bar -->
-      <div class="bg-reddit-card border border-reddit-border rounded-md px-3 py-2 flex items-center gap-2">
+      <div class="bg-reddit-card border border-reddit-border rounded-md px-3 py-2 flex items-center gap-2 shadow-sm">
         @for (tab of sortTabs; track tab.label) {
           <button
             class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold transition-colors"
@@ -33,25 +35,31 @@ import { ProjectPostComponent } from '../project-post/project-post.component';
           >
             @switch (tab.icon) {
               @case ('flame') { <svg lucideFlame [size]="16"></svg> }
-              <!-- @case ('sparkles') { <svg lucideSparkles [size]="16"></svg> }
-              @case ('trending') { <svg lucideTrendingUp [size]="16"></svg> }
-              @case ('bar') { <svg lucideBarChart3 [size]="16"></svg> } -->
             }
             <span class="hidden sm:inline">{{ tab.label }}</span>
           </button>
         }
       </div>
 
+      <!-- Featured Post (Pinned) -->
+      @if (featuredProject()) {
+        <div class="feed-item mb-4 scale-[1.02] origin-center">
+          <app-featured-post [project]="featuredProject()!" />
+        </div>
+      }
+
       <!-- Posts Feed -->
-      @for (project of store.filteredProjects(); track project.id) {
+      @for (project of regularProjects(); track project.id) {
         <div class="feed-item animate-fade-in-up">
           <app-project-post [project]="project" />
         </div>
       } @empty {
-        <div class="bg-reddit-card border border-reddit-border rounded-md p-8 text-center">
-          <p class="text-reddit-meta text-lg font-medium mb-2">No posts found</p>
-          <p class="text-reddit-meta text-sm">Try adjusting your search query</p>
-        </div>
+        @if (!featuredProject()) {
+          <div class="bg-reddit-card border border-reddit-border rounded-md p-8 text-center">
+            <p class="text-reddit-meta text-lg font-medium mb-2">No posts found</p>
+            <p class="text-reddit-meta text-sm">Try adjusting your search query</p>
+          </div>
+        }
       }
     </div>
   `,
@@ -69,6 +77,14 @@ export class FeedComponent implements OnInit, OnDestroy {
     { label: 'Top', icon: 'trending' },
     { label: 'Rising', icon: 'bar' },
   ];
+
+  featuredProject = computed(() => {
+    return this.store.filteredProjects().find(p => p.id === 'autocare-towing');
+  });
+
+  regularProjects = computed(() => {
+    return this.store.filteredProjects().filter(p => p.id !== 'autocare-towing');
+  });
 
   ngOnInit(): void {
     this.routeSub = this.route.paramMap.subscribe((params) => {

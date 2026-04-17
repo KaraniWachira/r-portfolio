@@ -39,4 +39,6 @@ export interface Project {
   awards: string[];
   summaryComments: ProjectComment[];
   articles: Article[];
+  githubUrl?: string;
+  liveUrl?: string;
 }

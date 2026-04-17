@@ -222,6 +222,40 @@ export class PortfolioStore {
         },
       ],
     },
+    {
+      id: 'autocare-towing',
+      title: 'AutoCare Towing: Annual Activity Showcase & Fleet Log',
+      author: 'u/Keith',
+      subreddit: 'r/Angular',
+      subredditColor: '#DD0031',
+      timestamp: new Date('2026-04-18T00:00:00'),
+      content:
+        'A high-performance showcase platform for a professional towing company, documenting annual operations and fleet activities. Built with a focus on premium aesthetics and real-time performance.',
+      upvotes: 0,
+      commentCount: 12,
+      awards: ['💎', '🔥', '🏢'],
+      githubUrl: 'https://github.com/KaraniWachira/autoCare-towing',
+      liveUrl: 'https://auto-care-towing.vercel.app/',
+      articles: [],
+      summaryComments: [
+        {
+          id: 'act-1',
+          author: 'u/Keith',
+          phase: 'Architecture Narrative',
+          content:
+            'The original project was built in Angular 19 using Angular Material for UI components. It leverages Angular Signals for reactive state management and Tailwind CSS for custom branding, ensuring a high-performance and maintainable codebase.',
+          techTags: [
+            { name: 'Angular 19', color: '#DD0031', severity: 'danger', tooltip: 'Angular 19 — Core framework for the towing platform' },
+            { name: 'Signals', color: '#F97316', severity: 'warn', tooltip: 'Angular Signals — Fine-grained reactivity' },
+            { name: 'Angular Material', color: '#607D8B', severity: 'secondary', tooltip: 'Angular Material — UI component library' },
+            { name: 'Tailwind CSS', color: '#6366F1', severity: 'info', tooltip: 'Tailwind CSS — Custom utility styling' },
+            { name: 'Cloudinary', color: '#0079D3', severity: 'info', tooltip: 'Cloudinary — Media optimization and transformations' },
+          ],
+          timestamp: new Date('2026-04-18T00:10:00'),
+          upvotes: 0,
+        },
+      ],
+    },
   ]);
 
   readonly selectedProjectId = signal<string | null>(null);

@@ -1,7 +1,6 @@
 import { Component, inject, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Avatar } from 'primeng/avatar';
-import { Tag } from 'primeng/tag';
 import { Tooltip } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import {
@@ -20,7 +19,6 @@ import { PortfolioStore } from '../../store/portfolio.store';
   imports: [
     CommonModule,
     Avatar,
-    Tag,
     Tooltip,
     ButtonModule,
     LucideFileText,
