@@ -29,8 +29,8 @@ import { PortfolioStore } from '../../store/portfolio.store';
     LucideCode2,
   ],
   template: `
-    <aside [class]="mode() === 'static' ? 'hidden xl:block w-80 shrink-0' : 'w-full'">
-      <div [class]="mode() === 'static' ? 'sticky top-14 space-y-3 pl-2 pb-4 max-h-[calc(100vh-3.5rem)] overflow-y-auto' : 'space-y-3 pb-4'">
+    <aside [class]="mode() === 'static' ? '' : 'w-full'">
+      <div [class]="mode() === 'static' ? 'space-y-3 pl-2 pb-4 max-h-[calc(100vh-3.5rem)] overflow-y-auto' : 'space-y-3 pb-4'">
 
         <!-- About Community Card -->
         <div class="bg-reddit-card rounded-lg border border-reddit-border overflow-hidden">
@@ -155,6 +155,11 @@ import { PortfolioStore } from '../../store/portfolio.store';
         </div>
       </div>
     </aside>
+  `,
+  styles: `
+    :host {
+      display: block;
+    }
   `,
 })
 export class RightSidebarComponent {

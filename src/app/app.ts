@@ -59,7 +59,7 @@ import { BackToTopComponent } from './components/back-to-top/back-to-top.compone
     <div class="pt-12 min-h-screen bg-reddit-bg">
       <div class="max-w-[1200px] mx-auto px-2 sm:px-4 py-4 flex gap-4">
         <!-- Sidebar -->
-        <app-nav-sidebar />
+        <app-nav-sidebar class="hidden lg:block w-60 shrink-0 sticky top-14 self-start" />
 
         <!-- Center Feed (Router Outlet) -->
         <main class="flex-1 min-w-0">
@@ -67,7 +67,7 @@ import { BackToTopComponent } from './components/back-to-top/back-to-top.compone
         </main>
 
         <!-- Right Sidebar -->
-        <app-right-sidebar />
+        <app-right-sidebar class="hidden xl:block w-80 shrink-0 sticky top-14 self-start" />
       </div>
 
       <!-- Global Content-Aligned Footer -->

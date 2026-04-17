@@ -27,6 +27,9 @@ import { PortfolioStore } from '../../store/portfolio.store';
   ],
   templateUrl: './nav-sidebar.component.html',
   styles: `
+    :host {
+      display: block;
+    }
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
