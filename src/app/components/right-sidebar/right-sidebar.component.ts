@@ -170,6 +170,15 @@ export class RightSidebarComponent {
 
   categorizedStack = [
     {
+      label: 'Data Science & Stats',
+      icon: 'database',
+      items: [
+        { name: 'R Language', color: '#276DC3', tooltip: 'Statistical analysis and modeling' },
+        { name: 'Tidyverse', color: '#3ECF8E', tooltip: 'Data analysis and visualization' },
+        { name: 'Tidymodels', color: '#3ECF8E', tooltip: 'Machine learning and statistical modeling' },
+      ]
+    },
+    {
       label: 'Systems & Infrastructure',
       icon: 'server',
       items: [
@@ -186,15 +195,6 @@ export class RightSidebarComponent {
         { name: 'Angular 21', color: '#DD0031', tooltip: 'Frontend framework (v21 with Signals)' },
         { name: 'TypeScript', color: '#3178C6', tooltip: 'Type-safe frontend development' },
         { name: 'Tailwind CSS', color: '#06B6D4', tooltip: 'Utility-first CSS framework' },
-      ]
-    },
-    {
-      label: 'Data Science & Stats',
-      icon: 'database',
-      items: [
-        { name: 'R Language', color: '#276DC3', tooltip: 'Statistical analysis and modeling' },
-        { name: 'Tidyverse', color: '#3ECF8E', tooltip: 'Data analysis and visualization' },
-        { name: 'Tidymodels', color: '#3ECF8E', tooltip: 'Machine learning and statistical modeling' },
       ]
     }
   ];
