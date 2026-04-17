@@ -1,0 +1,80 @@
+<div class="animate-slide-down">
+  <!-- Thread header -->
+  <div class="px-4 py-2 border-t border-reddit-border bg-gray-50/50">
+    <div class="flex items-center gap-2 text-xs text-reddit-meta">
+      <span class="font-bold">Summary & Resources</span>
+      <span>·</span>
+      <span>Official Documentation</span>
+    </div>
+  </div>
+
+  <!-- Main Summary & Articles Thread -->
+  <div class="px-2 pb-4 space-y-0.5">
+    @for (comment of project().summaryComments; track comment.id) {
+    <div class="flex group">
+      <!-- Vertical thread line -->
+      <div class="flex flex-col items-center mr-2 pt-2">
+        <div class="thread-line flex-1 ml-[1px] border-reddit-blue"></div>
+      </div>
+
+      <!-- Content area -->
+      <div class="flex-1 min-w-0 py-2">
+        <!-- Comment header -->
+        <div class="flex items-center gap-2 mb-1">
+          <div class="w-6 h-6 rounded-full bg-reddit-orange flex items-center justify-center text-[10px] font-bold text-white uppercase">
+            {{ comment.author[2] || 'K' }}
+          </div>
+          <span class="text-xs font-bold text-reddit-text">{{ comment.author }}</span>
+          <span class="text-xs text-reddit-meta">·</span>
+          <span class="text-xs font-bold text-reddit-blue">📋 {{ comment.phase }}</span>
+        </div>
+
+        <!-- Comment Body -->
+        <p class="text-sm text-reddit-text leading-relaxed mb-2 pr-4">{{ comment.content }}</p>
+
+        <!-- Tech Stack Tags -->
+        @if (comment.techTags && comment.techTags.length > 0) {
+        <div class="flex flex-wrap gap-1.5 mb-3">
+          @for (tag of comment.techTags; track tag.name) {
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-bold shadow-sm" [ngStyle]="getTagStyle(tag.name)">
+            {{ tag.name }}
+          </span>
+          }
+        </div>
+        }
+
+
+        <!-- Comment actions -->
+        <div class="flex items-center gap-3 text-xs text-reddit-meta mt-2">
+          <div class="flex items-center gap-1">
+            <button
+              class="hover:text-reddit-upvote transition-colors p-0.5 rounded hover:bg-red-50"
+              [class.text-reddit-upvote]="comment.userVote === 'up'"
+              (click)="vote(comment.id, 'up')"
+            >
+              <svg lucideChevronUp [size]="14"></svg>
+            </button>
+            <span
+              class="font-bold text-xs min-w-[1ch] text-center"
+              [class.text-reddit-upvote]="comment.userVote === 'up'"
+              [class.text-reddit-downvote]="comment.userVote === 'down'"
+              [class.text-reddit-text]="!comment.userVote"
+            >
+              {{ comment.upvotes }}
+            </span>
+            <button
+              class="hover:text-reddit-downvote transition-colors p-0.5 rounded hover:bg-blue-50"
+              [class.text-reddit-downvote]="comment.userVote === 'down'"
+              (click)="vote(comment.id, 'down')"
+            >
+              <svg lucideChevronDown [size]="14"></svg>
+            </button>
+          </div>
+          <button class="font-bold hover:underline">Reply</button>
+          <button class="font-bold hover:underline">Share</button>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>

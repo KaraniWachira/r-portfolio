@@ -1,0 +1,70 @@
+<aside [class]="mode() === 'static' ? 'hidden lg:block w-60 shrink-0' : 'w-full'">
+  <div
+    [class]="mode() === 'static' ? 'sticky top-14 space-y-3 pr-2 pb-4 max-h-[calc(100vh-3.5rem)] overflow-y-auto' : 'space-y-3 pb-4'">
+
+    <!-- Navigation -->
+    <nav class="bg-reddit-card rounded-lg border border-reddit-border overflow-hidden">
+      <div class="py-2">
+        <button
+          class="w-full flex items-center gap-3 px-4 py-2 text-sm text-reddit-text hover:bg-reddit-bg transition-colors text-left group"
+          (click)="goHome()">
+          <svg lucideHome [size]="20" class="text-reddit-meta group-hover:text-reddit-blue"></svg>
+          <span class="font-medium">Home</span>
+        </button>
+        <a href="https://www.linkedin.com/in/keith-karani-3794041a4/" target="_blank"
+          class="w-full flex items-center gap-3 px-4 py-2 text-sm text-reddit-text hover:bg-reddit-bg transition-colors">
+          <svg lucideBriefcase [size]="20" class="text-[#0077B5]"></svg>
+          <span class="font-medium">LinkedIn</span>
+        </a>
+        <a href="https://x.com/mrAfricanSeed" target="_blank"
+          class="w-full flex items-center gap-3 px-4 py-2 text-sm text-reddit-text hover:bg-reddit-bg transition-colors">
+          <svg lucideX [size]="20" class="text-black"></svg>
+          <span class="font-medium">Twitter</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- My Communities -->
+    <div class="bg-reddit-card rounded-lg border border-reddit-border overflow-hidden">
+      <div class="px-4 py-3 border-b border-reddit-border">
+        <h3 class="text-[10px] font-bold uppercase tracking-widest text-reddit-meta">My Ecosystem</h3>
+      </div>
+      <div class="py-1">
+        @for (sub of subreddits; track sub.name) {
+        <button
+          class="w-full flex items-center gap-3 px-4 py-2 text-sm hover:bg-reddit-bg transition-colors text-left group"
+          (click)="filterBySub(sub.name)">
+          <p-avatar [label]="sub.icon"
+            [style]="{ 'background-color': sub.color, color: '#fff', width: '24px', height: '24px', 'font-size': '0.65rem', 'font-weight': '700' }"
+            shape="circle" />
+          <span class="font-medium text-reddit-text group-hover:underline">{{ sub.name }}</span>
+        </button>
+        }
+      </div>
+    </div>
+
+    <!-- Resources -->
+    <div class="bg-reddit-card rounded-lg border border-reddit-border overflow-hidden">
+      <div class="px-4 py-3 border-b border-reddit-border">
+        <h3 class="text-[10px] font-bold uppercase tracking-widest text-reddit-meta">Resources</h3>
+      </div>
+      <div class="py-1">
+        <a href="https://github.com/KaraniWachira" target="_blank"
+          class="w-full flex items-center gap-3 px-4 py-2 text-sm text-reddit-text hover:bg-reddit-bg transition-colors">
+          <svg lucideUsers [size]="18" class="text-reddit-meta"></svg>
+          <span class="font-medium">GitHub Profile</span>
+        </a>
+        <a href="https://keithkarani.quarto.pub/" target="_blank"
+          class="w-full flex items-center gap-3 px-4 py-2 text-sm text-reddit-text hover:bg-reddit-bg transition-colors text-left">
+          <svg lucideStar [size]="18" class="text-reddit-meta"></svg>
+          <span class="font-medium">Quarto Pub</span>
+        </a>
+        <a href="https://github.com/Diamond-Digest-Labs/basepoint" target="_blank"
+          class="w-full flex items-center gap-3 px-4 py-2 text-sm text-reddit-text hover:bg-reddit-bg transition-colors text-left">
+          <svg lucideInfo [size]="18" class="text-reddit-meta"></svg>
+          <span class="font-medium">Diamond Digest Labs</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</aside>
