@@ -160,6 +160,9 @@ import { PortfolioStore } from '../../store/portfolio.store';
     :host {
       display: block;
     }
+    {
+      display: none !important;
+    }
   `,
 })
 export class RightSidebarComponent {

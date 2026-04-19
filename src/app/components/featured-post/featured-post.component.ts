@@ -34,144 +34,134 @@ import { PortfolioStore } from '../../store/portfolio.store';
   ],
   template: `
     <article
-      class="bg-reddit-card border border-reddit-border rounded-md hover:border-reddit-border-hover transition-all duration-300 shadow-sm hover:shadow-md overflow-hidden"
+      class="bg-reddit-card border-y sm:border border-reddit-border/60 rounded-none sm:rounded-xl hover:border-reddit-border transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer"
       pAnimateOnScroll
       enterClass="fadein"
       [attr.id]="'post-' + project().id"
+      (click)="toggleExpand()"
     >
-      <div class="flex">
-        <!-- Vote Gutter -->
-        <div class="w-10 bg-gray-50/80 rounded-l-md flex flex-col items-center pt-3 pb-2 gap-0.5 shrink-0 border-r border-reddit-border/30">
-          <button
-            class="p-1 rounded hover:bg-orange-100 transition-colors group"
-            [class.text-reddit-upvote]="voted() === 'up'"
-            [class.text-reddit-meta]="voted() !== 'up'"
-            (click)="vote('up'); $event.stopPropagation()"
-          >
-            <svg lucideChevronUp [size]="20" class="group-hover:text-reddit-upvote"></svg>
-          </button>
-          <span
-            class="text-xs font-bold py-1"
-            [class.text-reddit-upvote]="voted() === 'up'"
-            [class.text-reddit-downvote]="voted() === 'down'"
-            [class.text-reddit-text]="voted() === null"
-          >
-            {{ formatVotes(project().upvotes) }}
-          </span>
-          <button
-            class="p-1 rounded hover:bg-blue-100 transition-colors group"
-            [class.text-reddit-downvote]="voted() === 'down'"
-            [class.text-reddit-meta]="voted() !== 'down'"
-            (click)="vote('down'); $event.stopPropagation()"
-          >
-            <svg lucideChevronDown [size]="20" class="group-hover:text-reddit-downvote"></svg>
-          </button>
+      <div class="flex flex-col py-3 px-3 sm:px-4">
+        <!-- Post Meta -->
+        <div class="flex items-center gap-2 mb-2 flex-wrap">
+          <div class="w-[24px] h-[24px] rounded-full bg-reddit-orange flex items-center justify-center text-[10px] font-bold text-white uppercase shadow-inner">
+            A
+          </div>
+          <span class="text-[13px] font-bold text-reddit-text hover:underline cursor-pointer" (click)="$event.stopPropagation()">r/AutoCareTowing</span>
+          <span class="text-[13px] text-reddit-meta">•</span>
+          <span class="text-[13px] text-reddit-meta">{{ getTimeAgo(project().timestamp) }}</span>
+          
+          <div class="flex gap-1 ml-auto">
+            @for (award of project().awards; track $index) {
+              <span class="text-[13px]" [title]="'Awarded ' + award">{{ award }}</span>
+            }
+          </div>
         </div>
 
-        <!-- Main Content -->
-        <div class="flex-1 min-w-0">
-          <div class="p-3">
-            <!-- Post Meta -->
-            <div class="flex items-center gap-2 mb-2 flex-wrap">
-              <div class="w-5 h-5 rounded-full bg-reddit-orange flex items-center justify-center text-[10px] font-bold text-white uppercase shadow-inner">
-                A
-              </div>
-              <span class="text-xs font-bold text-reddit-text hover:underline cursor-pointer">r/AutoCareTowing</span>
-              <span class="text-xs text-reddit-meta">•</span>
-              <span class="text-xs text-reddit-meta">Posted by</span>
-              <span class="text-xs text-reddit-meta hover:underline cursor-pointer font-medium text-reddit-blue">{{ project().author }}</span>
-              <span class="text-xs text-reddit-meta">{{ getTimeAgo(project().timestamp) }}</span>
-              
-              <div class="flex gap-1 ml-auto">
-                @for (award of project().awards; track $index) {
-                  <span class="text-sm" [title]="'Awarded ' + award">{{ award }}</span>
-                }
-              </div>
-            </div>
+        <!-- Title -->
+        <h2 class="text-[17px] sm:text-[19px] font-bold text-reddit-text leading-tight mb-2 pr-4">
+          {{ project().title }}
+        </h2>
 
-            <!-- Title -->
-            <h2
-              class="text-xl font-bold text-reddit-text leading-tight mb-2 hover:text-reddit-blue transition-colors cursor-pointer"
-              (click)="toggleExpand()"
-            >
-              {{ project().title }}
-            </h2>
+        <!-- Media Container (16:9) -->
+        <div 
+          class="relative w-full aspect-video bg-black rounded-lg overflow-hidden group/media mb-3 cursor-pointer ring-1 ring-reddit-border/20"
+        >
+          <img
+            [src]="'/featured.png'"
+            alt="AutoCare Towing Fleet"
+            class="w-full h-full object-cover opacity-90 group-hover/media:opacity-100 transition-opacity duration-500"
+          />
+        </div>
 
-            <!-- Media Container (16:9) -->
+        <!-- Short Description -->
+        <p class="text-[14px] text-reddit-text leading-relaxed mb-3 line-clamp-3">
+          {{ project().content }}
+        </p>
+
+        <!-- Action Bar -->
+        <div class="flex items-center gap-1.5 flex-wrap font-bold text-reddit-meta text-[12px] justify-between">
+          <div class="flex items-center gap-1.5">
+            <!-- Vote Pill -->
             <div 
-              class="relative w-full aspect-video bg-black rounded-lg overflow-hidden group/media mb-3 cursor-pointer ring-1 ring-reddit-border/20"
-              (click)="toggleExpand()"
+              class="flex items-center bg-reddit-bg/60 hover:bg-reddit-bg shrink-0 rounded-full transition-colors h-[32px]"
+              (click)="$event.stopPropagation()"
             >
-              <img
-                [src]="'/featured.png'"
-                alt="AutoCare Towing Fleet"
-                class="w-full h-full object-cover opacity-80 group-hover/media:opacity-100 transition-opacity duration-500"
-              />
-              <!-- <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
-                <span class="px-2 py-1 bg-reddit-orange text-white text-[10px] font-black uppercase rounded shadow-lg tracking-wider">Featured Project</span>
-              </div> -->
+              <button
+                class="h-full px-2 rounded-l-full hover:bg-reddit-border/30 flex items-center justify-center transition-colors"
+                [class.text-reddit-upvote]="voted() === 'up'"
+                (click)="vote('up')"
+              >
+                <svg lucideChevronUp [size]="18" [class.text-reddit-upvote]="voted() === 'up'"></svg>
+              </button>
+              <span
+                class="px-1 text-[13px]"
+                [class.text-reddit-upvote]="voted() === 'up'"
+                [class.text-reddit-downvote]="voted() === 'down'"
+                [class.text-reddit-text]="voted() === null"
+              >
+                {{ formatVotes(project().upvotes) }}
+              </span>
+              <button
+                class="h-full px-2 rounded-r-full hover:bg-reddit-border/30 flex items-center justify-center transition-colors"
+                [class.text-reddit-downvote]="voted() === 'down'"
+                (click)="vote('down')"
+              >
+                <svg lucideChevronDown [size]="18" [class.text-reddit-downvote]="voted() === 'down'"></svg>
+              </button>
             </div>
 
-            <!-- Short Description -->
-            <p class="text-sm text-reddit-text leading-relaxed mb-4 line-clamp-2">
-              {{ project().content }}
-            </p>
+            <!-- Comments Pill -->
+            <button
+              class="flex items-center gap-1.5 px-3 h-[32px] rounded-full bg-reddit-bg/60 hover:bg-reddit-bg transition-colors"
+              [class.text-reddit-blue]="isExpanded()"
+              [class.bg-blue-50]="isExpanded()"
+              (click)="$event.stopPropagation(); toggleExpand()"
+            >
+              <svg lucideMessageSquare [size]="16"></svg>
+              <span>{{ project().commentCount }}</span>
+            </button>
 
-            <!-- Action Bar -->
-            <div class="flex items-center justify-between border-t border-reddit-border/30 pt-1 -mx-2 px-2">
-              <div class="flex items-center gap-1 flex-wrap">
-                <button
-                  class="flex items-center gap-1.5 px-3 py-2 rounded hover:bg-reddit-bg/60 transition-colors text-reddit-meta text-xs font-bold group"
-                  [class.text-reddit-blue]="isExpanded()"
-                  [class.bg-blue-50]="isExpanded()"
-                  (click)="toggleExpand()"
-                >
-                  <svg lucideMessageSquare [size]="18" class="group-hover:scale-110 transition-transform"></svg>
-                  <span>{{ project().commentCount }} Comments</span>
-                </button>
-                <button class="flex items-center gap-1.5 px-3 py-2 rounded hover:bg-reddit-bg/60 transition-colors text-reddit-meta text-xs font-bold group">
-                  <svg lucideShare2 [size]="18" class="group-hover:scale-110 transition-transform"></svg>
-                  <span class="hidden sm:inline">Share</span>
-                </button>
-                <button class="flex items-center gap-1.5 px-3 py-2 rounded hover:bg-reddit-bg/60 transition-colors text-reddit-meta text-xs font-bold group">
-                  <svg lucideBookmark [size]="18" class="group-hover:scale-110 transition-transform"></svg>
-                  <span class="hidden sm:inline">Save</span>
-                </button>
-              </div>
-
-              <div class="flex items-center gap-2">
-                @if (project().githubUrl) {
-                  <a [href]="project().githubUrl" target="_blank" (click)="$event.stopPropagation()">
-                    <p-button 
-                      label="Source" 
-                      severity="secondary" 
-                      [outlined]="true" 
-                      size="small"
-                      [style]="{'padding': '0.4rem 0.8rem', 'font-size': '0.75rem', 'font-weight': '700'}"
-                    >
-                      <ng-template pTemplate="icon">
-                         <svg lucideCode2 [size]="14" class="mr-1.5"></svg>
-                      </ng-template>
-                    </p-button>
-                  </a>
-                }
-                @if (project().liveUrl) {
-                  <a [href]="project().liveUrl" target="_blank" (click)="$event.stopPropagation()">
-                    <p-button 
-                      label="Live" 
-                      severity="info" 
-                      size="small"
-                      [style]="{'padding': '0.4rem 0.8rem', 'font-size': '0.75rem', 'font-weight': '700'}"
-                    >
-                      <ng-template pTemplate="icon">
-                        <svg lucideExternalLink [size]="14" class="mr-1.5"></svg>
-                      </ng-template>
-                    </p-button>
-                  </a>
-                }
-              </div>
-            </div>
+            <!-- Share Pill -->
+            <button class="hidden sm:flex items-center gap-1.5 px-3 h-[32px] rounded-full bg-reddit-bg/60 hover:bg-reddit-bg transition-colors" (click)="$event.stopPropagation()">
+              <svg lucideShare2 [size]="16"></svg>
+              <span>Share</span>
+            </button>
           </div>
+
+          <div class="flex items-center gap-2" (click)="$event.stopPropagation()">
+            @if (project().githubUrl) {
+              <a [href]="project().githubUrl" target="_blank">
+                <p-button 
+                  label="Source" 
+                  severity="secondary" 
+                  [outlined]="true" 
+                  size="small"
+                  [style]="{'padding': '0.3rem 0.6rem', 'font-size': '12px', 'font-weight': '700'}"
+                >
+                  <ng-template pTemplate="icon">
+                     <svg lucideCode2 [size]="14" class="mr-1"></svg>
+                  </ng-template>
+                </p-button>
+              </a>
+            }
+            @if (project().liveUrl) {
+              <a [href]="project().liveUrl" target="_blank">
+                <p-button 
+                  label="Live" 
+                  severity="info" 
+                  size="small"
+                  [style]="{'padding': '0.3rem 0.6rem', 'font-size': '12px', 'font-weight': '700'}"
+                >
+                  <ng-template pTemplate="icon">
+                    <svg lucideExternalLink [size]="14" class="mr-1"></svg>
+                  </ng-template>
+                </p-button>
+              </a>
+            }
+          </div>
+        </div>
+      </div>
+
 
           <!-- Expanded Content -->
           @if (isExpanded()) {
@@ -218,8 +208,7 @@ import { PortfolioStore } from '../../store/portfolio.store';
               </div>
             </div>
           }
-        </div>
-      </div>
+      
     </article>
   `,
   styles: [`

@@ -17,16 +17,18 @@ import { FeaturedPostComponent } from '../featured-post/featured-post.component'
   imports: [
     CommonModule,
     LucideFlame,
+    LucideSparkles,
+    LucideTrendingUp,
     ProjectPostComponent,
     FeaturedPostComponent,
   ],
   template: `
-    <div class="flex-1 min-w-0 max-w-2xl mx-auto w-full space-y-3 pb-16 lg:pb-4">
+    <div class="flex-1 min-w-0 w-full space-y-3 sm:space-y-4 pb-20 md:pb-6">
       <!-- Sort Bar -->
-      <div class="bg-reddit-card border border-reddit-border rounded-md px-3 py-2 flex items-center gap-2 shadow-sm">
+      <div class="bg-reddit-card border-y sm:border border-reddit-border rounded-none sm:rounded-md px-2 py-1.5 sm:px-3 sm:py-2 flex items-center gap-1 sm:gap-2 shadow-sm overflow-x-auto no-scrollbar">
         @for (tab of sortTabs; track tab.label) {
           <button
-            class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold transition-colors"
+            class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-colors whitespace-nowrap"
             [class.bg-reddit-bg]="activeSort === tab.label"
             [class.text-reddit-blue]="activeSort === tab.label"
             [class.text-reddit-meta]="activeSort !== tab.label"
@@ -34,16 +36,18 @@ import { FeaturedPostComponent } from '../featured-post/featured-post.component'
             (click)="activeSort = tab.label"
           >
             @switch (tab.icon) {
-              @case ('flame') { <svg lucideFlame [size]="16"></svg> }
+              @case ('flame') { <svg lucideFlame [size]="14"></svg> }
+              @case ('sparkles') { <svg lucideSparkles ></svg> }
+              @case ('trending') { <svg lucideTrendingUp ></svg> }
             }
-            <span class="hidden sm:inline">{{ tab.label }}</span>
+            <span>{{ tab.label }}</span>
           </button>
         }
       </div>
 
       <!-- Featured Post (Pinned) -->
       @if (featuredProject()) {
-        <div class="feed-item mb-4 scale-[1.02] origin-center">
+        <div class="feed-item mb-4 sm:scale-[1.02] origin-center">
           <app-featured-post [project]="featuredProject()!" />
         </div>
       }
@@ -55,13 +59,14 @@ import { FeaturedPostComponent } from '../featured-post/featured-post.component'
         </div>
       } @empty {
         @if (!featuredProject()) {
-          <div class="bg-reddit-card border border-reddit-border rounded-md p-8 text-center">
+          <div class="bg-reddit-card border border-reddit-border rounded-md p-8 text-center mx-2 sm:mx-0">
             <p class="text-reddit-meta text-lg font-medium mb-2">No posts found</p>
             <p class="text-reddit-meta text-sm">Try adjusting your search query</p>
           </div>
         }
       }
     </div>
+
   `,
 })
 export class FeedComponent implements OnInit, OnDestroy {
@@ -106,3 +111,10 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.routeSub?.unsubscribe();
   }
 }
+
+
+
+
+
+
+

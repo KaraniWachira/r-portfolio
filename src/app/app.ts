@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, HostListener, signal, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { NavSidebarComponent } from './components/nav-sidebar/nav-sidebar.component';
@@ -49,7 +49,7 @@ import { BackToTopComponent } from './components/back-to-top/back-to-top.compone
       [visible]="store.isRightSidebarVisible()" 
       (visibleChange)="store.isRightSidebarVisible.set($event)"
       position="right"
-      header="About Keith"
+      header="About Me"
       [style]="{ width: '320px' }"
     >
       <app-right-sidebar mode="drawer" />
@@ -57,22 +57,29 @@ import { BackToTopComponent } from './components/back-to-top/back-to-top.compone
 
     <!-- Main Layout -->
     <div class="pt-12 min-h-screen bg-reddit-bg">
-      <div class="max-w-[1200px] mx-auto px-2 sm:px-4 py-4 flex gap-4">
-        <!-- Sidebar -->
-        <app-nav-sidebar class="hidden lg:block w-60 shrink-0 sticky top-14 self-start" />
-
+      <div class="w-full max-w-[1280px] mx-auto flex justify-center p-0 md:p-4">
+        
+      <!-- Sidebar -->
+       @if (isDesktop()) {
+        <app-nav-sidebar
+         class="w-60 shrink-0 stickytop-14 self-start h-[calc(100vh-3.5rem)]" /> 
+       }
+        
         <!-- Center Feed (Router Outlet) -->
-        <main class="flex-1 min-w-0">
+        <main class="w-full min-w-0 max-w-[640px] flex-1">
           <router-outlet />
         </main>
 
-        <!-- Right Sidebar -->
-        <app-right-sidebar class="hidden xl:block w-80 shrink-0 sticky top-14 self-start" />
-      </div>
+        @if (isWide()) {
+           <!-- Right Sidebar -->
+          <app-right-sidebar class="w-80 shrink-0 sticky top-14 self-start"
+            mode="static" />
+        }
 
       <!-- Global Content-Aligned Footer -->
-      <app-sidebar-footer />
+      <app-sidebar-footer  hidden :block/>
     </div>
+
 
     <!-- Mobile Bottom Nav -->
     <app-bottom-nav />
@@ -85,4 +92,26 @@ import { BackToTopComponent } from './components/back-to-top/back-to-top.compone
 })
 export class App {
   readonly store = inject(PortfolioStore);
+
+  //create a signal to track of we are on desktop
+  isDesktop = signal(false);
+  isWide = signal(false)
+
+  //update the signal whenever the window is resized
+  @HostListener('window:resize')
+  onResize() {
+    this.checkScreenSize();
+  }
+
+  ngOnInit() {
+    this.onResize();
+  }
+
+  private checkScreenSize() {
+    if (typeof window !== 'undefined') {
+      this.isDesktop.set(window.innerWidth >= 1024);
+      this.isWide.set(window.innerWidth >= 1280);
+    }
+  }
+
 }

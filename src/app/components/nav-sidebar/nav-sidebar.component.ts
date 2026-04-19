@@ -28,7 +28,10 @@ import { PortfolioStore } from '../../store/portfolio.store';
   templateUrl: './nav-sidebar.component.html',
   styles: `
     :host {
-      display: block;
+      display: contents;
+    }
+    {
+      display: none !important;
     }
     .no-scrollbar::-webkit-scrollbar {
       display: none;
@@ -41,7 +44,7 @@ import { PortfolioStore } from '../../store/portfolio.store';
 })
 export class NavSidebarComponent {
   mode = input<'static' | 'drawer'>('static');
-  
+
   private store = inject(PortfolioStore);
   private router = inject(Router);
 

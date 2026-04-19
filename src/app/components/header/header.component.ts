@@ -36,11 +36,11 @@ import { PortfolioStore } from '../../store/portfolio.store';
     LucideInfo,
   ],
   template: `
-    <header class="fixed top-0 left-0 right-0 z-50 bg-reddit-header border-b border-reddit-border h-12 flex items-center px-4 gap-2 md:gap-4">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-reddit-header border-b border-reddit-border h-12 flex items-center px-2 sm:px-4 gap-1 md:gap-4">
       <!-- Left: Mobile Menu Toggle -->
       <button 
         (click)="store.toggleNav()"
-        class="lg:hidden p-2 -ml-2 rounded hover:bg-reddit-bg transition-colors"
+        class="lg:hidden p-1.5 rounded hover:bg-reddit-bg transition-colors"
       >
         <svg lucideMenu [size]="20" class="text-reddit-text"></svg>
       </button>
@@ -50,13 +50,13 @@ import { PortfolioStore } from '../../store/portfolio.store';
         <div class="w-8 h-8 bg-reddit-orange rounded-full flex items-center justify-center">
           <svg lucideCode2 class="text-white" [size]="18" [strokeWidth]="2.5"></svg>
         </div>
-        <span class="text-lg font-bold text-reddit-text hidden sm:block tracking-tight">
-          keith karani
+        <span class="text-base sm:text-lg font-bold text-reddit-text hidden sm:block tracking-tight">
+          keith
         </span>
       </div>
 
       <!-- Search Bar -->
-      <div class="flex-1 max-w-xl mx-auto">
+      <div class="flex-1 max-w-lg mx-1 sm:mx-auto min-w-0">
         <p-iconfield class="w-full">
           <p-inputicon>
             <svg lucideSearch [size]="16" class="text-reddit-meta"></svg>
@@ -64,8 +64,8 @@ import { PortfolioStore } from '../../store/portfolio.store';
           <input
             type="text"
             pInputText
-            placeholder="Search projects..."
-            class="w-full h-9 bg-reddit-bg border border-reddit-border rounded-full pl-10 pr-4 text-sm
+            placeholder="Search..."
+            class="w-full h-8 bg-reddit-bg border border-reddit-border rounded-full pl-9 pr-4 text-xs sm:text-sm
                    focus:border-reddit-blue focus:bg-white focus:outline-none
                    hover:border-reddit-border-hover hover:bg-white transition-all"
             [ngModel]="store.searchQuery()"
@@ -75,30 +75,31 @@ import { PortfolioStore } from '../../store/portfolio.store';
       </div>
 
       <!-- Right Actions -->
-      <div class="flex items-center gap-2 shrink-0 px-2 ml-auto">
+      <div class="flex items-center gap-1 sm:gap-2 shrink-0 ml-auto">
         <!-- Mobile Right Sidebar Toggle -->
         <button 
           (click)="store.toggleRightSidebar()"
-          class="xl:hidden p-2 rounded hover:bg-reddit-bg transition-colors"
+          class="xl:hidden p-1.5 rounded hover:bg-reddit-bg transition-colors"
         >
-          <svg lucideInfo [size]="20" class="text-reddit-meta"></svg>
+          <svg lucideInfo [size]="18" class="text-reddit-meta"></svg>
         </button>
 
        <!--  Profile -->
-        <button class="flex items-center gap-2 px-2 py-1 rounded hover:bg-reddit-bg border border-transparent hover:border-reddit-border transition-all">
+        <button class="flex items-center gap-1.5 px-1.5 py-1 rounded hover:bg-reddit-bg border border-transparent hover:border-reddit-border transition-all">
           <p-avatar
             label="K"
-            [style]="{ 'background-color': '#FF4500', color: '#fff', width: '28px', height: '28px', 'font-size': '0.75rem', 'font-weight': '700' }"
+            [style]="{ 'background-color': '#FF4500', color: '#fff', width: '24px', height: '24px', 'font-size': '0.7rem', 'font-weight': '700' }"
             shape="circle"
           />
-          <div class="hidden lg:flex flex-col items-start translate-y-[-1px]">
-            <span class="text-xs font-semibold text-reddit-text leading-tight">u/KArani</span>
-            <span class="text-[10px] text-reddit-meta leading-tight lowercase">⚡ {{ annualCommits() }} commit karma</span>
+          <div class="hidden md:flex flex-col items-start translate-y-[-1px]">
+            <span class="text-[11px] font-semibold text-reddit-text leading-tight">u/KArani</span>
+            <span class="text-[9px] text-reddit-meta leading-tight lowercase">⚡ {{ annualCommits() }}</span>
           </div>
-          <svg lucideChevronDown [size]="14" class="text-reddit-meta hidden lg:block"></svg>
+          <svg lucideChevronDown [size]="12" class="text-reddit-meta hidden lg:block"></svg>
         </button>
       </div>
     </header>
+
   `,
   styles: `
     :host {

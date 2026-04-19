@@ -16,6 +16,7 @@ export class PortfolioStore {
       upvotes: 0,
       commentCount: 5,
       awards: ['🏆', '🚀', '💡'],
+      githubUrl: 'https://github.com/KaraniWachira/autoCare-towing',
       summaryComments: [
         {
           id: 'bp-1',
@@ -25,7 +26,7 @@ export class PortfolioStore {
             'The core pipeline is written in Go, leveraging goroutines and channels for concurrent stream processing. Each data source gets its own ingestion worker that normalizes events into a common schema before pushing to the processing queue. Built custom middleware for rate limiting and circuit breaking.',
           techTags: [
             { name: 'Go', color: '#00ADD8', severity: 'info', tooltip: 'Go 1.23 — Concurrent pipeline workers using goroutines and channels' },
-            { name: 'gRPC', color: '#244C5A', severity: 'secondary', tooltip: 'gRPC for low-latency internal service communication' },
+
           ],
           timestamp: new Date('2026-04-10T14:35:00'),
           upvotes: 0,
